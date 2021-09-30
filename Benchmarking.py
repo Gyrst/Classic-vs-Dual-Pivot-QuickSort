@@ -5,8 +5,8 @@ from random import randint
 import Quick_Sort_Implementations 
 
 #Dealing with the input
-OptTuple3i = Optional[Tuple[int,int,int]]
-FunType = Callable[[List[int]], OptTuple3i]
+#OptTuple3i = Optional[Tuple[int,int,int]]
+FunType = Callable[[List[int]], List[int]]
 
 
 
