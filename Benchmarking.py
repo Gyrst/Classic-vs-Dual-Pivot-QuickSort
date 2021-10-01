@@ -3,11 +3,14 @@ from typing import List, Tuple, Optional, Dict, Callable, Any
 import time, csv, numpy as np, matplotlib.pyplot as plt
 from random import randint
 import Quick_Sort_Implementations 
+import sys
 
 #Dealing with the input
 #OptTuple3i = Optional[Tuple[int,int,int]]
 FunType = Callable[[List[int]], List[int]]
 
+#Setting recursion level:
+sys.setrecursionlimit(10**6)
 
 
 #Time
@@ -25,7 +28,8 @@ def benchmark(f: FunType, args: List[List[int]], N: int)->np.ndarray:
     for i in range(len(args)):
         arg: List[int] = args[i]
         for j in range(N):
-            M[i,j] = measure(lambda: f(arg))
+            arg_copy = arg.copy()
+            M[i,j] = measure(lambda: f(arg_copy))
     means = np.mean(M, axis=1).reshape(m,1)
     stdevs = np.std(M,axis=1,ddof=1).reshape(m, 1)
     return np.hstack([means, stdevs])
@@ -34,13 +38,16 @@ def benchmark(f: FunType, args: List[List[int]], N: int)->np.ndarray:
 
 #NEED TO MAKE NEW INPUT GENERATION METHOD - This is a temporary attempt with random ints.
 
-def generate_input(n: int)->List[int]:
+def generate_pseudo_random_input(n: int)->List[int]:
     list = []
     for i in range(1,n+1):
-        list.append(randint(0, 1000))
+        list.append(randint(-100000000, 100000000))
     return list
 
 
+def generate_ordered_input(n: int)->List[int]:
+    list = []
+    return [i for i in range(n)]
 
 
 
@@ -50,11 +57,11 @@ def generate_input(n: int)->List[int]:
 ns: List[int]
 args: List[List[int]]
 res_classic: np.ndarray
-result_dual: np.ndarray
-max_i: int = 12 #was 12
+res_dual: np.ndarray
+max_i: int = 30 #was 12
 N: int = 5 #was 5
 ns = [int(30*1.41**i) for i in range(max_i)]
-args = [generate_input(n) for n in ns]
+args = [generate_pseudo_random_input(n) for n in ns]
 
 #Uncopy Code to Run the full test
 res_classic = benchmark(Quick_Sort_Implementations.classic_quicksort, args, N)
