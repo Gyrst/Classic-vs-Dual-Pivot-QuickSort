@@ -28,7 +28,7 @@ def benchmark(f: FunType, args: List[List[int]], N: int)->np.ndarray:
     for i in range(len(args)):
         arg: List[int] = args[i]
         for j in range(N):
-            arg_copy = arg.copy()
+            arg_copy = arg.copy() #This was added to ensure that it takes in the unsorted
             M[i,j] = measure(lambda: f(arg_copy))
     means = np.mean(M, axis=1).reshape(m,1)
     stdevs = np.std(M,axis=1,ddof=1).reshape(m, 1)
@@ -41,14 +41,13 @@ def benchmark(f: FunType, args: List[List[int]], N: int)->np.ndarray:
 def generate_pseudo_random_input(n: int)->List[int]:
     list = []
     for i in range(1,n+1):
-        list.append(randint(-100000000, 100000000))
+        list.append(randint(-2147483648, 214483648)) # as we want the arrays to be 32-bit integers (this is the interval for 32-bit integers)
     return list
 
 
 def generate_ordered_input(n: int)->List[int]:
     list = []
     return [i for i in range(n)]
-
 
 
 
