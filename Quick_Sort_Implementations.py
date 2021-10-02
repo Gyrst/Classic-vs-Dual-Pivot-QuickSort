@@ -8,6 +8,11 @@ def swap(A, i, j):
     A[i] = A[j]
     A[j] = temp
 
+def swap2(A, i, j):
+    A[i], A[j] = A[j], A[i]
+    return A
+
+
 def quick_sort(A, left, right):
     if right - left >= 1:
         p = A[right]; i = left-1; j = right
@@ -60,10 +65,6 @@ def quick_sort2(A, left, right):
 
 def classic_quicksort(list):
     return quick_sort(list, 0, len(list)-1)
-
-
-
-
 
 
 
