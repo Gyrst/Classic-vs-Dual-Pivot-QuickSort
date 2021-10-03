@@ -57,8 +57,8 @@ ns: List[int]
 args: List[List[int]]
 res_classic: np.ndarray
 res_dual: np.ndarray
-max_i: int = 30 #was 12
-N: int = 5 #was 5
+max_i: int = 12 #was 12
+N: int = 10 #was 5
 ns = [int(30*1.41**i) for i in range(max_i)]
 args = [generate_pseudo_random_input(n) for n in ns]
 
@@ -66,10 +66,12 @@ args = [generate_pseudo_random_input(n) for n in ns]
 res_classic = benchmark(Quick_Sort_Implementations.classic_quicksort, args, N)
 res_dual = benchmark(Quick_Sort_Implementations.dual_quicksort, args, N)
 
+res_library_sort = benchmark(Quick_Sort_Implementations.standard_lib_sort, args, N)
+
 print(res_classic)
 print(res_dual)
 
-
+print(res_library_sort)
 
 
 
@@ -100,6 +102,9 @@ def write_latex_tabular(ns: List[int], res:  np.ndarray, filename: str):
 write_csv(ns, res_classic, "classic_performance.csv")
 write_latex_tabular(ns, res_classic, "classic_quicksort_tabular.tex")
 
+write_csv(ns, res_library_sort, "Library_sort.csv")
+write_latex_tabular(ns, res_library_sort, "Library_sort_tabular.tex")
+
 write_csv(ns, res_dual, "dual_quicksort_performance.csv")
 write_latex_tabular(ns, res_dual, "dual_quicksort_tabular.tex")
 
@@ -111,12 +116,14 @@ ax = fig.gca()
 #Changed to relevant information
 ax.errorbar(ns, res_classic[:,0], res_classic[:,1], capsize = 3.0, marker = 'o')
 ax.errorbar(ns, res_dual[:,0], res_dual[:,1], capsize = 3.0, marker = 'o')
+ax.errorbar(ns, res_library_sort[:,0], res_library_sort[:,1], capsize = 3.0, marker ='o')
 
 ax.set_xlabel('Number of elements $n$')
 ax.set_ylabel('Time (s)')
 ax.set_yscale('log')
+ax.set_xscale('log')
 
 
-ax.legend(['Classic_QuickSort', 'Dual_Pivot_QuickSort'])
-plt.savefig('plot_Classic_vs_Dual.pdf')
+ax.legend(['Classic_QuickSort', 'Dual_Pivot_QuickSort', 'Python_Lib_Sort()'])
+plt.savefig('plot_Classic_vs_Dual_vs_Lib_Sort.pdf')
 
