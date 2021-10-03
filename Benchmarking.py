@@ -57,7 +57,7 @@ ns: List[int]
 args: List[List[int]]
 res_classic: np.ndarray
 res_dual: np.ndarray
-max_i: int = 12 #was 12
+max_i: int = 30 #was 12
 N: int = 10 #was 5
 ns = [int(30*1.41**i) for i in range(max_i)]
 args = [generate_pseudo_random_input(n) for n in ns]
