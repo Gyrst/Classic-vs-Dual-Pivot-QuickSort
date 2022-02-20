@@ -12,6 +12,6 @@ quicksort is a heavily used in-place sorting algorithm. It has an average perfor
 ### 2.1 From Pseudocode to Python
 The implementation of the classic and dual pivot algorithms follows the pseudo-code implementations presented in the Wild and Nebel’s paper (2012). However, some adjustment have been made to successfully convert the pseudocode into working python code. Both were written and tested in Python 3.8.10. In the classic quicksort, the do while loops have been handled by creating the variables (counters i, j ) that increment before the inner while loops start, so that i and j increment once before the inner while loops start. Moreover, the outer-while loop is running on the condition while True, and breaks if j > i. For the dual pivot quicksort an initial check if A[left] > A[right] was added to ensure that a swap of the right and left happens if the statement evaluates to true.
 
-### 3.0 Testing for Correctness, Experiments, Discussion and Results
+## 3.0 Testing for Correctness, Experiments, Discussion and Results
 
 See report pdf for details regarding the experiments and findings.
